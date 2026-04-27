@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OTP Login</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- Animated background grid -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <div class="card-wrapper">
+    <div class="card">
+
+      <!-- Brand Header -->
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="10" fill="url(#grad)"/>
+            <path d="M11 18C11 14.134 14.134 11 18 11C21.866 11 25 14.134 25 18" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="18" cy="22" r="4" fill="white"/>
+            <defs>
+              <linearGradient id="grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6C63FF"/>
+                <stop offset="1" stop-color="#FF6584"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Verifi</span>
+          <span class="brand-tag">Secure Login</span>
+        </div>
+      </div>
+
+      <!-- ─── STEP 1: Email Input ─── -->
+      <div class="step" id="step-mobile">
+        <h1 class="step-title">Enter your email</h1>
+        <p class="step-sub">We'll send a 6-digit code to verify your identity.</p>
+
+        <div class="input-group" id="mobile-group">
+          <span class="input-prefix">
+            <!-- Email icon -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/>
+            </svg>
+          </span>
+          <input
+            type="email"
+            id="mobile-input"
+            class="mobile-input"
+            placeholder="you@example.com"
+            autocomplete="email"
+            inputmode="email"
+          />
+        </div>
+        <div class="field-error" id="mobile-error"></div>
+
+        <button class="btn-primary" id="send-otp-btn" onclick="sendOTP()">
+          <span class="btn-label">Send OTP</span>
+          <span class="btn-spinner" hidden>
+            <svg class="spinner-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="60" stroke-dashoffset="20"/></svg>
+          </span>
+        </button>
+      </div>
+
+      <!-- ─── STEP 2: OTP Verification ─── -->
+      <div class="step hidden" id="step-otp">
+        <button class="back-btn" onclick="goBack()">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M13 4L7 10L13 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back
+        </button>
+
+        <h1 class="step-title">Check your inbox</h1>
+        <p class="step-sub" id="otp-sent-msg">Code sent to <strong id="display-number"></strong></p>
+
+        <div class="otp-boxes" id="otp-boxes">
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" data-index="0" />
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" data-index="1" />
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" data-index="2" />
+          <span class="otp-dash">—</span>
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" data-index="3" />
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" data-index="4" />
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" data-index="5" />
+        </div>
+        <div class="field-error" id="otp-error"></div>
+
+        <button class="btn-primary" id="verify-btn" onclick="verifyOTP()">Verify Code</button>
+
+        <div class="resend-row">
+          <span id="resend-text">Resend code in <strong id="timer-count">30</strong>s</span>
+          <button class="resend-btn hidden" id="resend-btn" onclick="resendOTP()">Resend OTP</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 3: Success ─── -->
+      <div class="step hidden" id="step-success">
+        <div class="success-anim">
+          <svg class="checkmark" viewBox="0 0 52 52">
+            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark-check" fill="none" d="M14 27l8 8 16-16"/>
+          </svg>
+        </div>
+        <h1 class="step-title">Verified!</h1>
+        <p class="step-sub">You've successfully logged in. Welcome aboard.</p>
+        <button class="btn-primary" onclick="restart()">Start Over</button>
+      </div>
+
+    </div><!-- /card -->
+
+    <!-- Dev hint -->
+    <p class="dev-hint">Open DevTools console to see generated OTP</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
